@@ -1,0 +1,7 @@
+package BoardGame;
+
+/**
+ *
+ * @author jkirkish
+ */
+public enum Mark {EMPTY,NOUGHT,CROSS,YELLOW,RED,BLUE,GREEN,MAGENTA,ORANGE}
