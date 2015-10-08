@@ -1,0 +1,7 @@
+package BoardGame;
+
+/**
+ *
+ * @author jkirkish
+ */
+public enum Player {FIRST,SECOND}
