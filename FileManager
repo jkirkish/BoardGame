@@ -1,0 +1,75 @@
+package games.utilities;
+
+import java.io.*;
+import java.nio.*;
+import java.nio.charset.*;
+import java.nio.file.*;
+
+import BoardGame.*;
+
+
+public class FileManager {
+
+	public static void writeToFile(String saveState, String
+			fileName) {
+		
+		 Path file = Paths.get(fileName);
+		Charset cset = Charset.forName("UTF-16");
+		if (Files.notExists(file)) { //Check for file
+			System.out.println("Enter text for new file. Hit ENTER on a blank line to end.");
+					
+						try (BufferedReader stdin = new BufferedReader( new
+							InputStreamReader(System.in));
+							BufferedWriter fout = Files.newBufferedWriter(file, cset);) {
+						Files.newBufferedWriter(file, cset);
+						String line = saveState;
+						//while ((line = stdin.readLine()) != null && line.length() != 0 ) {
+							fout.write(saveState);
+							fout.newLine();
+						//}
+						fout.flush();
+			} catch (IOException ex) {
+				System.err.println(ex);
+			}
+			System.out.println("File written.");
+		} else {
+			System.out.println("Reading file ....");
+			try (BufferedReader fin = Files.newBufferedReader(file, cset);) {
+				String line = saveState;
+	
+				while ((line = fin.readLine()) != null) {
+					System.out.println(line);
+				}
+			} catch (IOException ex) {
+				System.err.println(ex);
+			}
+		}
+		
+	}
+	
+	/*Implement the writeToFileAsync method using a separate
+	thread. Use the following code as a guide:
+	new Thread() {
+	public void run() {
+	writeToFile(saveState, fileName);
+	}
+	}.start();
+	Note: This code uses an anonymous inner class to declare
+	and instantiate a Thread class. Unlike a traditional inner
+	class, anonymous inner classes are available only within
+	the statement they’re declared. You’ll see more examples
+	of anonymous classes with Swing in the next lesson. To
+	ensure that local variables are unchanged by the inner
+	class, the parameters saveState and fileName must be
+	declared with the final keyword.*/
+	
+	
+	public static void writeToFileAsync(final String saveState,final String fileName) {
+		new Thread() {
+			public void run() {
+				FileManager.writeToFile(saveState, fileName);	
+				
+			}
+		}.start();
+	}
+}
